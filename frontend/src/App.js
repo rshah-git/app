@@ -31,6 +31,14 @@ const App = () => {
     { id: 'video', name: 'Video Generation', icon: '🎬', query: 'AI video generation editing deepfake' }
   ];
 
+  // Handle category click
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category.id);
+    setQuery(category.name);
+    setShowSuggestions(false);
+    performSearch(category.query);
+  };
+
   // Debounced search function
   const performSearch = async (searchQuery) => {
     if (!searchQuery.trim()) {
