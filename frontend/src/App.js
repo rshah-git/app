@@ -224,6 +224,40 @@ const App = () => {
               )}
             </div>
           </form>
+
+          {/* AI Categories Section */}
+          <div className="mt-12">
+            <div className="text-center mb-8">
+              <h3 className="text-lg font-medium text-gray-900 mb-2">Browse AI Categories</h3>
+              <p className="text-gray-600">Discover AI tools by category</p>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 max-w-6xl mx-auto">
+              {aiCategories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => handleCategoryClick(category)}
+                  className={`group relative p-6 bg-white rounded-xl border-2 transition-all duration-200 hover:border-blue-500 hover:shadow-lg hover:-translate-y-1 ${
+                    selectedCategory === category.id 
+                      ? 'border-blue-500 bg-blue-50 shadow-lg' 
+                      : 'border-gray-200'
+                  }`}
+                >
+                  <div className="text-center">
+                    <div className="text-3xl mb-3">{category.icon}</div>
+                    <h4 className={`font-medium text-sm ${
+                      selectedCategory === category.id ? 'text-blue-700' : 'text-gray-900'
+                    }`}>
+                      {category.name}
+                    </h4>
+                  </div>
+                  
+                  {/* Hover effect overlay */}
+                  <div className="absolute inset-0 bg-blue-500 opacity-0 group-hover:opacity-5 rounded-xl transition-opacity duration-200"></div>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Search Stats */}
