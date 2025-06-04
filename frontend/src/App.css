@@ -1,3 +1,33 @@
+/* Category card animations */
+.category-card {
+  transition: all 0.2s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.category-card.selected {
+  border-color: #2563eb;
+  background-color: #eff6ff;
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.15);
+}
+
+/* Category grid responsive adjustments */
+@media (max-width: 640px) {
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .category-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 /* Global Styles */
 * {
   box-sizing: border-box;
