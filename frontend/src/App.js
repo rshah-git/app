@@ -16,6 +16,21 @@ const App = () => {
 
   const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
+  // AI Categories based on clubhouse.ai structure
+  const aiCategories = [
+    { id: 'chatbot', name: 'Chatbot', icon: '🤖', query: 'AI chatbot assistant conversation' },
+    { id: 'code', name: 'Code Assistant', icon: '💻', query: 'AI code assistant programming development' },
+    { id: 'content', name: 'Content Creation', icon: '📝', query: 'AI content creation writing generator' },
+    { id: 'education', name: 'Education', icon: '🎓', query: 'AI education learning tutorial platform' },
+    { id: 'generative', name: 'Generative AI', icon: '✨', query: 'generative AI model LLM GPT' },
+    { id: 'healthcare', name: 'Healthcare', icon: '🏥', query: 'AI healthcare medical diagnosis' },
+    { id: 'image', name: 'Image Generation', icon: '🎨', query: 'AI image generation art DALL-E Midjourney' },
+    { id: 'music', name: 'Music', icon: '🎵', query: 'AI music generation audio sound' },
+    { id: 'productivity', name: 'Productivity', icon: '⚡', query: 'AI productivity automation workflow tools' },
+    { id: 'research', name: 'Research', icon: '🔬', query: 'AI research papers academic science' },
+    { id: 'video', name: 'Video Generation', icon: '🎬', query: 'AI video generation editing deepfake' }
+  ];
+
   // Debounced search function
   const performSearch = async (searchQuery) => {
     if (!searchQuery.trim()) {
