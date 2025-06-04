@@ -101,6 +101,7 @@ const App = () => {
   const handleInputChange = (e) => {
     const value = e.target.value;
     setQuery(value);
+    setSelectedCategory(null); // Clear category selection when typing
 
     // Clear previous timer
     if (debounceTimer.current) {
