@@ -1,0 +1,8 @@
+[build]
+  base = "frontend"
+  command = "yarn build"
+  publish = "build"
+
+# OPTIONAL: Uncomment the 'functions' line below ONLY if you have Netlify Functions
+# located in 'frontend/netlify/functions'. If not, leave it out.
+# functions = "netlify/functions"
