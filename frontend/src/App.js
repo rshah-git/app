@@ -10,6 +10,7 @@ const App = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const debounceTimer = useRef(null);
   const searchInputRef = useRef(null);
 
