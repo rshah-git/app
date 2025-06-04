@@ -10,6 +10,21 @@ class AISearchEngineTester:
         self.tests_run = 0
         self.tests_passed = 0
         self.test_results = []
+        
+        # AI Categories based on the frontend implementation
+        self.ai_categories = [
+            { "id": "chatbot", "name": "Chatbot", "icon": "🤖", "query": "AI chatbot assistant conversation" },
+            { "id": "code", "name": "Code Assistant", "icon": "💻", "query": "AI code assistant programming development" },
+            { "id": "content", "name": "Content Creation", "icon": "📝", "query": "AI content creation writing generator" },
+            { "id": "education", "name": "Education", "icon": "🎓", "query": "AI education learning tutorial platform" },
+            { "id": "generative", "name": "Generative AI", "icon": "✨", "query": "generative AI model LLM GPT" },
+            { "id": "healthcare", "name": "Healthcare", "icon": "🏥", "query": "AI healthcare medical diagnosis" },
+            { "id": "image", "name": "Image Generation", "icon": "🎨", "query": "AI image generation art DALL-E Midjourney" },
+            { "id": "music", "name": "Music", "icon": "🎵", "query": "AI music generation audio sound" },
+            { "id": "productivity", "name": "Productivity", "icon": "⚡", "query": "AI productivity automation workflow tools" },
+            { "id": "research", "name": "Research", "icon": "🔬", "query": "AI research papers academic science" },
+            { "id": "video", "name": "Video Generation", "icon": "🎬", "query": "AI video generation editing deepfake" }
+        ]
 
     def run_test(self, name, method, endpoint, expected_status, data=None, params=None):
         """Run a single API test"""
@@ -101,6 +116,33 @@ class AISearchEngineTester:
             200,
             params={"q": query}
         )
+        
+    def test_category_search(self, category):
+        """Test search with a specific AI category query"""
+        category_query = next((cat["query"] for cat in self.ai_categories if cat["id"] == category), None)
+        if not category_query:
+            print(f"❌ Category '{category}' not found")
+            return False, None
+            
+        return self.run_test(
+            f"Category Search for '{category}'",
+            "POST",
+            "api/search",
+            200,
+            data={"query": category_query}
+        )
+        
+    def test_all_categories(self):
+        """Test search with all AI categories"""
+        results = []
+        for category in self.ai_categories:
+            success, response = self.test_category_search(category["id"])
+            results.append({
+                "category": category["name"],
+                "success": success,
+                "results_count": len(response.get("results", [])) if success and response else 0
+            })
+        return results
 
     def print_summary(self):
         """Print a summary of all test results"""
@@ -124,6 +166,8 @@ def main():
     # Get the backend URL from environment or use default
     tester = AISearchEngineTester()
     
+    print("\n===== TESTING BACKEND API =====")
+    
     # Test health check endpoint
     tester.test_health_check()
     
@@ -136,13 +180,31 @@ def main():
         "Stable Diffusion"
     ]
     
+    print("\n===== TESTING GENERAL SEARCH =====")
     for query in ai_queries:
         tester.test_search(query)
     
     # Test suggestions endpoint
     suggestion_queries = ["openai", "mid", "machine", "claude", "stable"]
+    
+    print("\n===== TESTING SEARCH SUGGESTIONS =====")
     for query in suggestion_queries:
         tester.test_suggestions(query)
+    
+    # Test category searches
+    print("\n===== TESTING CATEGORY SEARCHES =====")
+    print("\nTesting specific categories:")
+    tester.test_category_search("chatbot")
+    tester.test_category_search("image")
+    tester.test_category_search("code")
+    
+    print("\nTesting all categories:")
+    category_results = tester.test_all_categories()
+    
+    print("\n===== CATEGORY SEARCH RESULTS =====")
+    for result in category_results:
+        status = "✅" if result["success"] else "❌"
+        print(f"{status} {result['category']}: {result['results_count']} results")
     
     # Print summary
     all_passed = tester.print_summary()
